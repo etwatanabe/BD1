@@ -1,0 +1,29 @@
+<html lang="en">
+
+<head>
+    <title>Página com Node.js</title>
+    <script>
+        //função para carregar valores no select
+        function carregarEditora() {
+        // var select = document.querySelector('select');
+        var mylist = document.getElementById("Lista");
+        // document.getElementById("inputId").value = select.value;
+        document.getElementById("inputEd").value = mylist.options[mylist.selectedIndex].text;
+        }
+    </script>
+</head>
+    <body>
+        <h1> <%= uesc %> </h1>
+        <h2> <%= query[0].nome %> </h2>
+        <% for (var i=0; i < query.length; i++) { %>
+            <li> <%= query[i].nome %> - <%= query[i].empresa %> </li>
+        <% } %>
+
+        <select class="form-control" id="Lista" name="select" onchange="carregarEditora()">
+            <option>Selecione um opção</option>
+            <% for(var i=0; i < query.length; i++) { %>
+                <option value="<%= query[i].nome %>"> <%= query[i].empresa %> </option>
+            <% } %>
+        </select>
+    </body>
+</html>
