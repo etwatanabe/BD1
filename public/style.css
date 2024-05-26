@@ -1,0 +1,99 @@
+/* Estilo para o corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+/* Estilo para o cabeçalho */
+header {
+    background-color: #1f1f;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Estilo para os títulos */
+h1 {
+    color: #333;
+}
+
+/* Estilo para o contêiner principal */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Estilo para a lista não ordenada */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Estilo para os itens da lista */
+ul li {
+    background: white;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo para os links */
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+/* Estilo para os links quando o mouse passa sobre eles */
+a:hover {
+    color: #007BFF;
+}
+
+/* Estilo para o formulário */
+form {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo para os elementos dentro do formulário */
+form div {
+    margin-bottom: 10px;
+}
+
+/* Estilo para os rótulos do formulário */
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Estilo para campos de entrada de texto e área de texto */
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Estilo para o botão do formulário */
+form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilo para o botão do formulário quando o mouse passa sobre ele */
+form button:hover {
+    background: #0056b3;
+}

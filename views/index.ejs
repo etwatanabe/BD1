@@ -1,29 +1,25 @@
-<html lang="en">
-
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Página com Node.js</title>
-    <script>
-        //função para carregar valores no select
-        function carregarEditora() {
-        // var select = document.querySelector('select');
-        var mylist = document.getElementById("Lista");
-        // document.getElementById("inputId").value = select.value;
-        document.getElementById("inputEd").value = mylist.options[mylist.selectedIndex].text;
-        }
-    </script>
+    <title>Simple Node.js App</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
-    <body>
-        <h1> <%= uesc %> </h1>
-        <h2> <%= query[0].nome %> </h2>
-        <% for (var i=0; i < query.length; i++) { %>
-            <li> <%= query[i].nome %> - <%= query[i].empresa %> </li>
-        <% } %>
-
-        <select class="form-control" id="Lista" name="select" onchange="carregarEditora()">
-            <option>Selecione um opção</option>
-            <% for(var i=0; i < query.length; i++) { %>
-                <option value="<%= query[i].nome %>"> <%= query[i].empresa %> </option>
-            <% } %>
-        </select>
-    </body>
+<body>
+    <header>
+        <h1>Posts</h1>
+    </header>
+    <div class="container">
+        <ul>
+            <% posts.forEach(post => { %>
+                <li>
+                    <strong><%= post.title %></strong>: <%= post.content %>
+                    <a href="/edit/<%= post.id %>">Edit</a>
+                </li>
+            <% }) %>
+        </ul>
+        <a href="/create">Create a new post</a>
+        <br>
+        <a href="/tables">View All Tables</a>
+    </div>
+</body>
 </html>

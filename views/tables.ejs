@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Tables</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>Database Tables</h1>
+    </header>
+    <div class="container">
+        <ul>
+            <% tables.forEach(table => { %>
+                <li><a href="/table/<%= table.name %>"><%= table.name %></a></li>
+            <% }) %>
+        </ul>
+        <a href="/">Back to Posts</a>
+    </div>
+</body>
+</html>
