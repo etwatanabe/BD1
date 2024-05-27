@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Node.js App</title>
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmes</title>
+    <!--link rel="stylesheet" href="/styles.css"-->
 </head>
 <body>
-    <header>
-        <h1>Posts</h1>
-    </header>
-    <div class="container">
-        <ul>
-            <% posts.forEach(post => { %>
-                <li>
-                    <strong><%= post.title %></strong>: <%= post.content %>
-                    <a href="/edit/<%= post.id %>">Edit</a>
-                </li>
+    <%- include('header') %>
+    <h1>Filmes</h1>
+    <form method="get" action="/">
+        <label for="platform">Plataforma:</label>
+        <select name="platform" id="platform">
+            <option value="">Todas</option>
+            <% platforms.forEach(platform => { %>
+                <option value="<%= platform.id %>"><%= platform.nome %></option>
             <% }) %>
-        </ul>
-        <a href="/create">Create a new post</a>
-        <br>
-        <a href="/tables">View All Tables</a>
-    </div>
+        </select>
+        
+        <label for="genre">Gênero:</label>
+        <select name="genre" id="genre">
+            <option value="">Todos</option>
+            <% genres.forEach(genre => { %>
+                <option value="<%= genre.nome %>"><%= genre.nome %></option>
+            <% }) %>
+        </select>
+
+        <button type="submit">Filtrar</button>
+    </form>
+    <table>
+        <tr>
+            <th>Título</th>
+            <th>Ano</th>
+            <th>Plataforma</th>
+            <th>Gêneros</th>
+        </tr>
+        <% movies.forEach(movie => { %>
+            <tr>
+                <td><%= movie.titulo %></td>
+                <td><%= movie.ano %></td>
+                <td><%= movie.plataforma %></td>
+                <td><%= movie.generos %></td>
+            </tr>
+        <% }) %>
+    </table>
 </body>
 </html>

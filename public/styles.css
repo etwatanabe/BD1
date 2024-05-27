@@ -1,0 +1,53 @@
+/* public/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #94aedc;
+}
+
+header {
+    background: #19293e;
+    color: #42517e;
+    padding: 10px 20px;
+    text-align: left;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: #42517e;
+    text-decoration: none;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background: #fff;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+table, th, td {
+    border:1px solid black;
+  }
