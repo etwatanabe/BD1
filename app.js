@@ -47,6 +47,8 @@ app.get('/', (req, res) => {
                 }
 
                 res.render('index', {
+                    platformId,
+                    genreId,
                     movies,
                     platforms,
                     genres

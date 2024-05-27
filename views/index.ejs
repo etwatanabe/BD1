@@ -14,7 +14,7 @@
         <select name="platform" id="platform">
             <option value="">Todas</option>
             <% platforms.forEach(platform => { %>
-                <option value="<%= platform.id %>"><%= platform.nome %></option>
+                <option value="<%= platform.id %>" <% if (platformId == platform.id) { %>selected<% } %>><%= platform.nome %></option>
             <% }) %>
         </select>
         
@@ -22,7 +22,7 @@
         <select name="genre" id="genre">
             <option value="">Todos</option>
             <% genres.forEach(genre => { %>
-                <option value="<%= genre.nome %>"><%= genre.nome %></option>
+                <option value="<%= genre.nome %>" <% if (genreId == genre.nome) { %>selected<% } %>><%= genre.nome %></option>
             <% }) %>
         </select>
 
