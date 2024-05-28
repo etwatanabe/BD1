@@ -3,44 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmes</title>
-    <!--link rel="stylesheet" href="/styles.css"-->
+    <title>Hamburgueria</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <%- include('header') %>
-    <h1>Filmes</h1>
-    <form method="get" action="/">
-        <label for="platform">Plataforma:</label>
-        <select name="platform" id="platform">
-            <option value="">Todas</option>
-            <% platforms.forEach(platform => { %>
-                <option value="<%= platform.id %>" <% if (platformId == platform.id) { %>selected<% } %>><%= platform.nome %></option>
-            <% }) %>
-        </select>
-        
-        <label for="genre">Gênero:</label>
-        <select name="genre" id="genre">
-            <option value="">Todos</option>
-            <% genres.forEach(genre => { %>
-                <option value="<%= genre.nome %>" <% if (genreId == genre.nome) { %>selected<% } %>><%= genre.nome %></option>
-            <% }) %>
-        </select>
+    <h2>Ingredientes</h2>
 
+    <form method="get" action="/">
+        <% let i = 0 %>
+        <% ingredientes.forEach(ingrediente => { %>
+                <input type="checkbox" id="<%= ingrediente.id %>" name="ingredientes" value="<%= ingrediente.id %>">
+                <label for="<%= ingrediente.id %>"><%= ingrediente.nome %></label>
+            <% if(++i == 5) { i = 0 %><br><% } %>
+        <% }) %>
         <button type="submit">Filtrar</button>
+        </tr>
     </form>
+
     <table>
         <tr>
-            <th>Título</th>
-            <th>Ano</th>
-            <th>Plataforma</th>
-            <th>Gêneros</th>
+            <th>Hambúrguer</th>
+            <th>Descrição</th>
+            <th>Preço</th>
         </tr>
-        <% movies.forEach(movie => { %>
+        <% hamburgueres.forEach(hamburguer => { %>
             <tr>
-                <td><%= movie.titulo %></td>
-                <td><%= movie.ano %></td>
-                <td><%= movie.plataforma %></td>
-                <td><%= movie.generos %></td>
+                <td><%= hamburguer.nome %></td>
+                <td><%= hamburguer.descricao %></td>
+                <td>R$ <%= hamburguer.preco.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></td>
             </tr>
         <% }) %>
     </table>

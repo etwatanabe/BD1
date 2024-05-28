@@ -7,55 +7,44 @@ const port = 3000;
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-const db = new sqlite3.Database('./database/db.sqlite');
+const db = new sqlite3.Database('./database/hamburgueria.db');
 
 app.get('/', (req, res) => {
-    const platformId = req.query.platform;
-    const genreId = req.query.genre;
-    let query = `SELECT movies.id, movies.titulo, movies.ano, streaming_platforms.nome as plataforma, group_concat(genres.nome, ', ') as generos
-                 FROM movies
-                 JOIN streaming_platforms ON movies.platform_id = streaming_platforms.id
-                 JOIN movie_genres ON movies.id = movie_genres.movie_id
-                 JOIN genres ON movie_genres.genre_id = genres.id
-                 GROUP BY movies.id, movies.titulo, movies.ano, streaming_platforms.nome`;
+    const ingredienteId = req.query.ingredientes;
+    console.log(ingredienteId);
+    let query = `SELECT hamburgueres.nome, hamburgueres.descricao, hamburgueres.preco
+                 FROM hamburgueres
+                 JOIN hamburgueres_ingredientes ON hamburgueres.id = hamburgueres_ingredientes.hamburguer_id
+                 JOIN ingredientes ON hamburgueres_ingredientes.ingrediente_id = ingredientes.id
+                 WHERE 1=1
+                 `;
 
-    if (platformId) {
-        query += ` HAVING movies.platform_id = ${platformId}`;
-    }
-
-    if (genreId) {
-        if (platformId) {
-            query += ` AND group_concat(genres.nome, ', ') LIKE '%${genreId}%'`;
-        } else {
-            query += ` HAVING group_concat(genres.nome, ', ') LIKE '%${genreId}%'`;
+    if (ingredienteId) {
+        for(let ingrediente in ingredienteId) {
+            query += ` AND ingredientes.id = ${ingredienteId[ingrediente]}`;
         }
     }
 
-    db.all(query, [], (err, movies) => {
+    query += ` GROUP BY hamburgueres.id`;
+
+    db.all(query, [], (err, hamburgueres) => {
         if (err) {
             return console.error(err.message);
         }
 
-        db.all(`SELECT * FROM streaming_platforms`, [], (err, platforms) => {
+        db.all(`SELECT * FROM ingredientes`, [], (err, ingredientes) => {
             if (err) {
                 return console.error(err.message);
             }
 
-            db.all(`SELECT * FROM genres`, [], (err, genres) => {
-                if (err) {
-                    return console.error(err.message);
-                }
-
-                res.render('index', {
-                    platformId,
-                    genreId,
-                    movies,
-                    platforms,
-                    genres
-                });
+            res.render('index', {
+                ingredienteId,
+                hamburgueres,
+                ingredientes
             });
         });
     });
+    console.log(query);
 });
 
 app.listen(port, () => {
