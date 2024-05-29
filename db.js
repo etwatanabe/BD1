@@ -49,7 +49,7 @@ db.serialize(() => {
         ('Lose Yourself', '00:05:20', 4), -- Eminem
         ('Rolling in the Deep', '00:03:48', 5), -- Adele
         ('Can''t Help Falling in Love', '00:03:01', 6), -- Elvis Presley
-        ('Halo', '00:04:21', 7); -- Beyoncé
+        ('Halo', '00:04:21', 7), -- Beyoncé
         ('Billie Jean', '00:04:54', 1), -- Michael Jackson
         ('Vogue', '00:05:19', 2), -- Madonna
         ('No Woman, No Cry', '00:03:00', 3), -- Bob Marley

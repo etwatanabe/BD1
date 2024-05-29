@@ -56,7 +56,36 @@ app.get('/', (req, res) => {
                     return;
                 }
 
-            res.render('index', { musicas, artistas, generos, artistaSelecionado, generoSelecionado });
+                res.render('index', { musicas, artistas, generos, artistaSelecionado, generoSelecionado });
+            });
+        });
+    });
+});
+
+
+app.get('/tabelas', (req, res) => {
+    db.all(`SELECT * FROM musicas`, [], (err, musicas) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send("Erro no servidor");
+            return;
+        }
+
+        db.all(`SELECT * FROM artistas`, [], (err, artistas) => {
+            if (err) {
+                console.error(err.message);
+                res.status(500).send("Erro no servidor");
+                return;
+            }
+
+            db.all(`SELECT * FROM generos`, [], (err, generos) => {
+                if (err) {
+                    console.error(err.message);
+                    res.status(500).send("Erro no servidor");
+                    return;
+                }
+
+                res.render('tabelas', { musicas, artistas, generos });
             });
         });
     });

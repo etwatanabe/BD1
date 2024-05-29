@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Músicas</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include('./header') %>
+    
+    <div>
+        <h1>Músicas</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Duração</th>
+                    <th>ID_Artista</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% musicas.forEach(musica => { %>
+                    <tr>
+                        <td><%= musica.id %></td>
+                        <td><%= musica.titulo %></td>
+                        <td><%= musica.duracao %></td>
+                        <td><%= musica.artista_id %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+    <div>
+        <h1>Artistas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>ID_Gênero</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% artistas.forEach(artista => { %>
+                    <tr>
+                        <td><%= artista.id %></td>
+                        <td><%= artista.nome %></td>
+                        <td><%= artista.genero_id %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+    <div>
+        <h1>Gêneros</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% generos.forEach(genero => { %>
+                    <tr>
+                        <td><%= genero.id %></td>
+                        <td><%= genero.nome %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
