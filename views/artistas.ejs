@@ -8,13 +8,15 @@
     <br>
     <h1 class="display-4">Artistas</h1>
   </div>
-  <div>
-    <table class="table">
+
+  <div class="table-responsive">
+    <table class="table text-center">
       <thead class="thead-dark">
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Nome</th>
           <th scope="col">Gênero</th>
+          <th scope="col"><a href="" class="text-white"><span class="iconify" style="font-size: 150%;" data-icon="bi:plus-square"></span></a>
         </tr>
       </thead>
       <tbody>
@@ -23,6 +25,11 @@
             <th scope="row"><%= artista.id %></th>
             <td><%= artista.nome %></td>
             <td><%= artista.genero %></td>
+            <td>
+              <a href="" class="text-success"><span class="iconify" style="font-size: 125%;" data-icon="bi:pencil-square"></span></a>
+              &nbsp;
+              <a href="" class="text-danger"><span class="iconify" style="font-size: 125%;" data-icon="bi:x-square"></span></a>
+            </td>
           </tr>
         <% }) %>
       </tbody>

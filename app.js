@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
                 return;
             }
             
-            res.render('index', { musicas, artistas, artistaSelecionado });
+            res.render('inicio', { page:'Início', musicas, artistas, artistaSelecionado });
         });
     });
 });
@@ -49,7 +49,7 @@ app.get('/musicas', (req, res) => {
             res.status(500).send("Erro no servidor");
             return;
         }
-        res.render('musicas', { musicas });
+        res.render('musicas', { page:'Músicas', musicas });
     });
 });
 
@@ -60,7 +60,7 @@ app.get('/artistas', (req, res) => {
             res.status(500).send("Erro no servidor");
             return;
         }
-        res.render('artistas', { artistas });
+        res.render('artistas', { page:'Artistas', artistas });
     });
 });
 
