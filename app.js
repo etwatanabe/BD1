@@ -15,24 +15,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Rota principal
 app.get('/', (req, res) => {
     const artistaSelecionado = req.query.artista;
-    const generoSelecionado = req.query.genero;
-    let query = `SELECT musicas.titulo, musicas.duracao, generos.nome AS genero, artistas.nome AS artista
-                 FROM musicas 
-                 JOIN artistas ON musicas.artista_id = artistas.id
-                 JOIN generos ON artistas.genero_id = generos.id`;
-    // console.log(artistaSelecionado, generoSelecionado);
+    let query = `SELECT m.titulo, a.nome as artista, m.duracao, a.genero as genero
+                 FROM musicas m
+                 JOIN artistas a ON m.artista_id = a.id`;
 
     if (artistaSelecionado) {
-        query += ` WHERE artistas.id = ${artistaSelecionado}`;
-    }
-
-    if (generoSelecionado) {
-        if(artistaSelecionado) {
-            query += ` AND generos.id = ${generoSelecionado}`;
-        }
-        else {
-            query += ` WHERE generos.id = ${generoSelecionado}`;
-        }
+        query += ` WHERE a.id = ${artistaSelecionado}`;
     }
 
     db.all(query, [], (err, musicas) => {
@@ -48,46 +36,31 @@ app.get('/', (req, res) => {
                 res.status(500).send("Erro no servidor");
                 return;
             }
-
-            db.all(`SELECT * FROM generos`, [], (err, generos) => {
-                if (err) {
-                    console.error(err.message);
-                    res.status(500).send("Erro no servidor");
-                    return;
-                }
-
-                res.render('index', { musicas, artistas, generos, artistaSelecionado, generoSelecionado });
-            });
+            
+            res.render('index', { musicas, artistas, artistaSelecionado });
         });
     });
 });
 
-
-app.get('/tabelas', (req, res) => {
+app.get('/musicas', (req, res) => {
     db.all(`SELECT * FROM musicas`, [], (err, musicas) => {
         if (err) {
             console.error(err.message);
             res.status(500).send("Erro no servidor");
             return;
         }
+        res.render('musicas', { musicas });
+    });
+});
 
-        db.all(`SELECT * FROM artistas`, [], (err, artistas) => {
-            if (err) {
-                console.error(err.message);
-                res.status(500).send("Erro no servidor");
-                return;
-            }
-
-            db.all(`SELECT * FROM generos`, [], (err, generos) => {
-                if (err) {
-                    console.error(err.message);
-                    res.status(500).send("Erro no servidor");
-                    return;
-                }
-
-                res.render('tabelas', { musicas, artistas, generos });
-            });
-        });
+app.get('/artistas', (req, res) => {
+    db.all(`SELECT * FROM artistas`, [], (err, artistas) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send("Erro no servidor");
+            return;
+        }
+        res.render('artistas', { artistas });
     });
 });
 

@@ -1,53 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Músicas</title>
-    <link rel="stylesheet" href="/styles.css">
-</head>
+
+<%- include('./header') %>
+
 <body>
-    <%- include('./header') %>
-    
-    <form method="get" action="/">
-        <label for="artista">Artista:</label>
-        <select name="artista" id="artista">
-            <option value="">Todas</option>
-            <% artistas.forEach(artista => { %>
-                <option value="<%= artista.id %>" <% if (artistaSelecionado == artista.id) { %>selected<% } %>><%= artista.nome %></option>
-            <% }) %>
-        </select>
+  <form method="get" action="/">
+    <label for="artista">Artista:</label>
+    <select name="artista" id="artista">
+      <option value="">Todo s</option>
+        <% artistas.forEach(artista => { %>
+          <option value="<%= artista.id %>" <% if (artistaSelecionado == artista.id) { %>selected<% } %>><%= artista.nome %></option>
+        <% }) %>
+    </select>
 
-        <label for="genero">Gênero:</label>
-        <select name="genero" id="genero">
-            <option value="">Todos</option>
-            <% generos.forEach(genero => { %>
-                <option value="<%= genero.id %>" <% if (generoSelecionado == genero.id) { %>selected<% } %>><%= genero.nome %></option>
-            <% }) %>
-        </select>
+    <button type="submit">Filtrar</button>
+  </form>
 
-        <button type="submit">Filtrar</button>
-    </form>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Artista</th>
-                <th>Gênero</th>
-                <th>Duração</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% musicas.forEach(musica => { %>
-                <tr>
-                    <td><%= musica.titulo %></td>
-                    <td><%= musica.artista %></td>
-                    <td><%= musica.genero %></td>
-                    <td><%= musica.duracao %></td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Título</th>
+        <th scope="col">Artista</th>
+        <th scope="col">Gênero</th>
+        <th scope="col">Duração</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% musicas.forEach(musica => { %>
+        <tr>
+          <th scope="row"><%= musica.titulo %></th>
+          <td><%= musica.artista %></td>
+          <td><%= musica.genero %></td>
+          <td><%= musica.duracao %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
 </body>
 </html>

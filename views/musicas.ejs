@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./header') %>
+
+<body>
+  <div>
+    <br>
+    <h1 class="display-4">Músicas</h1>
+  </div>
+  <div>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Título</th>
+          <th scope="col">Duração</th>
+          <th scope="col">ID_Artista</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% musicas.forEach(musica => { %>
+          <tr>
+            <th scope="row"><%= musica.id %></th>
+            <td><%= musica.titulo %></td>
+            <td><%= musica.duracao %></td>
+            <td><%= musica.artista_id %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>

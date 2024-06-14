@@ -4,16 +4,10 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./database/musicas.db');
 
 db.serialize(() => {
-    db.run(`CREATE TABLE IF NOT EXISTS generos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT NOT NULL
-    );`)
-
     db.run(`CREATE TABLE IF NOT EXISTS artistas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
-        genero_id INTEGER,
-        FOREIGN KEY (genero_id) REFERENCES generos(id)
+        genero TEXT NOT NULL
     );`);
     
     db.run(`CREATE TABLE IF NOT EXISTS musicas (
@@ -24,22 +18,14 @@ db.serialize(() => {
         FOREIGN KEY (artista_id) REFERENCES artistas(id)
     );`);
 
-    db.run(`INSERT INTO generos (nome) VALUES 
-        ('Pop'),
-        ('Reggae'),
-        ('Hip Hop'),
-        ('Rock'),
-        ('R&B');
-    `);
-
-    db.run(`INSERT INTO artistas (nome, genero_id) VALUES 
-        ('Michael Jackson', 1), -- Pop
-        ('Madonna', 1), -- Pop
-        ('Bob Marley', 2), -- Reggae
-        ('Eminem', 3), -- Hip Hop
-        ('Adele', 1), -- Pop
-        ('Elvis Presley', 4), -- Rock
-        ('Beyoncé', 5); -- R&B
+    db.run(`INSERT INTO artistas (nome, genero) VALUES 
+        ('Michael Jackson', 'Pop'),
+        ('Madonna', 'Pop'),
+        ('Bob Marley', 'Reggae'),
+        ('Eminem', 'Hip Hop'),
+        ('Adele', 'Pop'),
+        ('Elvis Presley', 'Rock'),
+        ('Beyoncé', 'R&B');
     `);
 
     db.run(`INSERT INTO musicas (titulo, duracao, artista_id) VALUES 
