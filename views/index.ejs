@@ -7,7 +7,7 @@
   <form method="get" action="/">
     <label for="artista">Artista:</label>
     <select name="artista" id="artista">
-      <option value="">Todo s</option>
+      <option value="">Todos</option>
         <% artistas.forEach(artista => { %>
           <option value="<%= artista.id %>" <% if (artistaSelecionado == artista.id) { %>selected<% } %>><%= artista.nome %></option>
         <% }) %>
