@@ -56,10 +56,11 @@ app.get('/musicas', (req, res) => {
 
 // Rota para tabela de artistas
 app.get('/artistas', (req, res) => {
-    const id = req.query.excluir_id;
-    const nome = req.query.excluir_nome;
-    const genero = req.query.excluir_genero;
-    console.log(id + ' ' + nome + ' ' + genero);
+    const acao = req.query.acao;
+    const dados = { 'id': req.query.id, 'nome': req.query.nome, 'genero': req.query.genero};
+
+
+    console.log(req.query.action, dados);
     
     db.all(`SELECT * FROM artistas`, [], (err, artistas) => {
         if (err) {
@@ -67,10 +68,25 @@ app.get('/artistas', (req, res) => {
             res.status(500).send("Erro no servidor");
             return;
         }
-        
-        if(id && nome && genero) {
-            console.log(id + ' ' + nome + ' ' + genero);
-            db.run(`DELETE FROM artistas WHERE id = ${id}`, [], (err) => {
+
+        if(acao) {
+            let query = ``;
+            let variaveis = [];
+
+            if(acao == 'incluir' && dados.nome && dados.genero) {
+                query = `INSERT INTO artistas(nome, genero) VALUES (?, ?)`;
+                variaveis = [dados.nome, dados.genero];
+                
+            } else if(acao == 'editar' && dados.id && dados.nome && dados.genero) {
+                query = `UPDATE artistas SET nome = ?, genero = ? WHERE id = ?`;
+                variaveis = [dados.nome, dados.genero, dados.id];
+
+            } else if(acao == 'excluir' && dados.id && dados.nome && dados.genero) {
+                query = `DELETE FROM artistas WHERE id = ?`;
+                variaveis = [dados.id];
+            }
+
+            db.run(query, variaveis, (err) => {
                 if (err) {
                     console.error(err.message);
                     res.status(500).send("Erro no servidor");
