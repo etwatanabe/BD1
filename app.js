@@ -42,6 +42,7 @@ app.get('/', (req, res) => {
     });
 });
 
+// Rota para tabela de musicas
 app.get('/musicas', (req, res) => {
     db.all(`SELECT * FROM musicas`, [], (err, musicas) => {
         if (err) {
@@ -53,14 +54,35 @@ app.get('/musicas', (req, res) => {
     });
 });
 
+// Rota para tabela de artistas
 app.get('/artistas', (req, res) => {
+    const id = req.query.excluir_id;
+    const nome = req.query.excluir_nome;
+    const genero = req.query.excluir_genero;
+    console.log(id + ' ' + nome + ' ' + genero);
+    
     db.all(`SELECT * FROM artistas`, [], (err, artistas) => {
         if (err) {
             console.error(err.message);
             res.status(500).send("Erro no servidor");
             return;
         }
-        res.render('artistas', { page:'Artistas', artistas });
+        
+        if(id && nome && genero) {
+            console.log(id + ' ' + nome + ' ' + genero);
+            db.run(`DELETE FROM artistas WHERE id = ${id}`, [], (err) => {
+                if (err) {
+                    console.error(err.message);
+                    res.status(500).send("Erro no servidor");
+                    return;
+                }
+                res.redirect('artistas');
+
+            });
+        } else {
+            res.render('artistas', { page:'Artistas', artistas });
+        }
+
     });
 });
 

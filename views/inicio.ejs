@@ -13,11 +13,10 @@
       <label for="artista">Artista:</label>
       <select name="artista" id="artista">
         <option value="">Todos</option>
-          <% artistas.forEach(artista => { %>
-            <option value="<%= artista.id %>" <% if (artistaSelecionado == artista.id) { %>selected<% } %>><%= artista.nome %></option>
-          <% }) %>
+        <% artistas.forEach(artista => { %>
+          <option value="<%= artista.id %>" <% if (artistaSelecionado == artista.id) { %>selected<% } %>><%= artista.nome %></option>
+        <% }) %>
       </select>
-      
       <button type="submit">Filtrar</button>
     </form>
   </div>

@@ -5,7 +5,6 @@
 
 <body>
   <div>
-    <br>
     <h1 class="display-4">Músicas</h1>
   </div>
 
@@ -17,7 +16,7 @@
           <th scope="col">Título</th>
           <th scope="col">Duração</th>
           <th scope="col">ID_Artista</th>
-          <th scope="col"><a href="" class="text-white"><span class="iconify" style="font-size: 150%;" data-icon="bi:plus-square"></span></a>
+          <th scope="col"><a href="/musicas/incluir" class="text-white"><span class="iconify" style="font-size: 150%;" data-icon="bi:plus-square"></span></a>
           </th>
         </tr>
       </thead>
@@ -31,11 +30,35 @@
             <td>
               <a href="" class="text-success"><span class="iconify" style="font-size: 125%;" data-icon="bi:pencil-square"></span></a>
               &nbsp;
-              <a href="" class="text-danger"><span class="iconify" style="font-size: 125%;" data-icon="bi:x-square"></span></a>
+              <a href="" class="text-danger"><span class="iconify" style="font-size: 125%;" data-icon="bi:trash"></span></a>
             </td>
           </tr>
           <% }) %>
       </tbody>
     </table>
   </div>
+
+  <!-- Script de Excluir-->
+  <script>
+    // Adiciona um listener a todos os botões com a classe
+    document.querySelectorAll('.text-danger').forEach(a => {
+      a.addEventListener('click', function() {
+        // Identifica a linha do botão clicado
+        const row = this.closest('tr');
+
+        // Captura o valor do th e do td da linha
+        const id = row.querySelector('th').innerText;
+        const nome = row.querySelectorAll('td')[0].innerText;
+        const genero = row.querySelectorAll('td')[1].innerText;
+        
+        // Preenche o formulário oculto e envia
+        document.getElementById('excluir_id').value = id;
+        document.getElementById('excluir_nome').value = nome;
+        document.getElementById('excluir_genero').value = genero;
+        
+        // Preenche o formulário oculto e envia;
+        document.getElementById('modal-text').innerText = `${nome}`;
+      });
+    });
+  </script>
 </body>

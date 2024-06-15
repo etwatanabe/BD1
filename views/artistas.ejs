@@ -3,36 +3,98 @@
 
 <%- include('./header') %>
 
+<!-- Título -->
 <body>
-  <div>
-    <br>
-    <h1 class="display-4">Artistas</h1>
+    <div class="container-fluid">
+      <h1 class="display-4">Artistas</h1>
+    </div>
+
+  <!-- Tabela -->
+  <div class ="container-fluid">
+    <div class="table-responsive">
+      <table class="table text-center">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Gênero</th>
+            <th scope="col"><a href="" class="text-white"><span class="iconify" style="font-size: 150%;" data-icon="bi:plus-square"></span></a>
+          </tr>
+        </thead>
+        <tbody>
+          <% artistas.forEach(artista => { %>
+            <tr>
+              <th scope="row"><%= artista.id %></th>
+              <td><%= artista.nome %></td>
+              <td><%= artista.genero %></td>
+              <td>
+                <button type="button" class="btn btn-link text-success" data-toggle="modal" data-target="">
+                  <i class="iconify" style="font-size: 125%;" data-icon="bi:pencil-square"></i>
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-link text-danger" data-toggle="modal" data-target="#excluir">
+                  <i class="iconify" style="font-size: 125%;" data-icon="bi:trash"></i>
+                </button>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="table-responsive">
-    <table class="table text-center">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Gênero</th>
-          <th scope="col"><a href="" class="text-white"><span class="iconify" style="font-size: 150%;" data-icon="bi:plus-square"></span></a>
-        </tr>
-      </thead>
-      <tbody>
-        <% artistas.forEach(artista => { %>
-          <tr>
-            <th scope="row"><%= artista.id %></th>
-            <td><%= artista.nome %></td>
-            <td><%= artista.genero %></td>
-            <td>
-              <a href="" class="text-success"><span class="iconify" style="font-size: 125%;" data-icon="bi:pencil-square"></span></a>
-              &nbsp;
-              <a href="" class="text-danger"><span class="iconify" style="font-size: 125%;" data-icon="bi:x-square"></span></a>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
+  <!-- Modal de Excluir-->
+  <div class="container-fluid">
+    <div class="modal fade" id="excluir" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="TituloModalCentralizado">Excluir</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4>Deseja excluir o/a artista <strong id="modal-text"></strong>?</h4>
+            <p><small>Todas suas músicas também serão excluídas.</small></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            
+            <form action="/artistas" method="GET" id="teste">
+              <input type="hidden" name="excluir_id" id="excluir_id">
+              <input type="hidden" name="excluir_nome" id="excluir_nome">
+              <input type="hidden" name="excluir_genero" id="excluir_genero">
+              <button type="submit" class="btn btn-danger">Excluir</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Script de Excluir-->
+  <script>
+    // Adiciona um listener a todos os botões com a classe
+    document.querySelectorAll('.btn-link').forEach(button => {
+      button.addEventListener('click', function() {
+        // Identifica a linha do botão clicado
+        const row = this.closest('tr');
+
+        // Captura o valor do th e do td da linha
+        const id = row.querySelector('th').innerText;
+        const nome = row.querySelectorAll('td')[0].innerText;
+        const genero = row.querySelectorAll('td')[1].innerText;
+        
+        // Preenche o formulário oculto e envia
+        document.getElementById('excluir_id').value = id;
+        document.getElementById('excluir_nome').value = nome;
+        document.getElementById('excluir_genero').value = genero;
+        
+        // Preenche o formulário oculto e envia;
+        document.getElementById('modal-text').innerText = `${nome}`;
+      });
+    });
+  </script>
+
 </body>
