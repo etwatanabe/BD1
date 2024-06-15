@@ -44,13 +44,54 @@ app.get('/', (req, res) => {
 
 // Rota para tabela de musicas
 app.get('/musicas', (req, res) => {
+    const acao = req.query.acao;
+    const dados = { 'id': req.query.id, 'titulo': req.query.titulo, 'duracao': req.query.duracao, 'artista_id': req.query.artista_id};
+    console.log(req.query);
+
     db.all(`SELECT * FROM musicas`, [], (err, musicas) => {
         if (err) {
             console.error(err.message);
             res.status(500).send("Erro no servidor");
             return;
         }
-        res.render('musicas', { page:'Músicas', musicas });
+
+        db.all(`SELECT id, nome FROM artistas`, [], (err, artistas) => {
+            if (err) {
+                console.error(err.message);
+                res.status(500).send("Erro no servidor");
+                return;
+            }
+
+            if(acao) {
+                let query = ``;
+                let variaveis = [];
+                
+                if(acao == 'incluir' && dados.titulo != '' && dados.duracao != '' && dados.artista_id != '') {
+                    query = `INSERT INTO musicas(titulo, duracao, artista_id) VALUES (?, ?, ?)`;
+                    variaveis = [dados.titulo, dados.duracao, dados.artista_id];
+
+                } else if(acao == 'editar' && dados.id && dados.titulo && dados.duracao && dados.artista_id) {
+                    query = `UPDATE musicas SET titulo=?, duracao=?, artista_id=? WHERE id=?`;
+                    variaveis = [dados.titulo, dados.duracao, dados.artista_id, dados.id];
+                
+                } else if(acao == 'excluir' && dados.id) {
+                    query = `DELETE FROM musicas WHERE id=?`;
+                    variaveis = [dados.id];
+                }
+                
+                db.run(query, variaveis, (err) => {
+                    if (err) {
+                        console.error(err.message);
+                        res.status(500).send("Erro no servidor");
+                        return;
+                    }
+                    res.redirect('musicas');
+                });
+
+            } else {
+                res.render('musicas', { page:'Músicas', musicas, artistas });
+            }
+        });
     });
 });
 
@@ -58,10 +99,7 @@ app.get('/musicas', (req, res) => {
 app.get('/artistas', (req, res) => {
     const acao = req.query.acao;
     const dados = { 'id': req.query.id, 'nome': req.query.nome, 'genero': req.query.genero};
-
-
-    console.log(req.query.action, dados);
-    
+  
     db.all(`SELECT * FROM artistas`, [], (err, artistas) => {
         if (err) {
             console.error(err.message);
@@ -84,21 +122,27 @@ app.get('/artistas', (req, res) => {
             } else if(acao == 'excluir' && dados.id && dados.nome && dados.genero) {
                 query = `DELETE FROM artistas WHERE id = ?`;
                 variaveis = [dados.id];
+
+                db.all(`DELETE FROM musicas WHERE artista_id = ?`, [dados.id], (err) => {
+                    if (err) {
+                        console.error(err.message);
+                        res.status(500).send("Erro no servidor");
+                        return;
+                    }
+                });
             }
 
-            db.run(query, variaveis, (err) => {
+            db.all(query, variaveis, (err) => {
                 if (err) {
                     console.error(err.message);
                     res.status(500).send("Erro no servidor");
                     return;
                 }
                 res.redirect('artistas');
-
             });
         } else {
             res.render('artistas', { page:'Artistas', artistas });
         }
-
     });
 });
 

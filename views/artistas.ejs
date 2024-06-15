@@ -62,7 +62,7 @@
               <input type="hidden" name="id" id="excluir_id">
               <input type="hidden" name="nome" id="excluir_nome">
               <input type="hidden" name="genero" id="excluir_genero">
-              <input type="hidden" name="acao" id="excluir_acao" value="excluir">
+              <input type="hidden" name="acao" id="acao" value="excluir">
               <button type="submit" class="btn btn-danger">Excluir</button>
             </form>
           </div>
@@ -123,11 +123,11 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="nome" class="col-form-label">Nome:</label>
-                <input type="text" class="form-control" name="nome" id="incluir_nome">
+                <input type="text" class="form-control" name="nome" id="incluir_nome" placeholder="Nome" required>
               </div>
               <div class="form-group">
                 <label for="genero" class="col-form-label">Gênero:</label>
-                <input type="text" class="form-control" name="genero" id="incluir_genero"></input>
+                <input type="text" class="form-control" name="genero" id="incluir_genero" placeholder="Gênero" required></input>
               </div>
             </div>
             <div class="modal-footer">
@@ -184,7 +184,5 @@
       });
     });
   </script>
-
-
 
 </body>
