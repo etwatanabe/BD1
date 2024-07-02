@@ -3,45 +3,63 @@
 
 <%- include('./header') %>
 
-<body>
-  <div>
-    <h1 class="display-2">Songs</h1>
-  </div>
+  <body>
+    <div class="container-fluid">
+      <h1 class="display-2">Songs</h1>
+    </div>
 
-  <div>
-    <form method="get" action="/">
-      <label for="artista">Artista:</label>
-      <select name="artista" id="artista">
-        <option value="">Todos</option>
-        <% artistas.forEach(artista => { %>
-          <option value="<%= artista.id %>" <% if (artistaSelecionado == artista.id) { %>selected<% } %>><%= artista.nome %></option>
-        <% }) %>
-      </select>
-      <button type="submit">Filtrar</button>
-    </form>
-  </div>
+    <!-- Tabela -->
+    <div class="container-fluid">
+      <div class="table-responsive">
+        <table id="songs" class="table">
+          <thead class="thead-dark" style="font-size: 125%">
+            <tr>
+              <th scope="col">Título</th>
+              <th scope="col">Artista</th>
+              <th scope="col">Gênero</th>
+              <th scope="col">Duração</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% musicas.forEach(musica=> { %>
+              <tr>
+                <th scope="row">
+                  <%= musica.titulo %>
+                </th>
+                <td>
+                  <%= musica.artista %>
+                </td>
+                <td>
+                  <%= musica.genero %>
+                </td>
+                <td>
+                  <%= musica.duracao %>
+                </td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 
-  <div class="table-responsive">
-    <table class="table text-center">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Título</th>
-          <th scope="col">Artista</th>
-          <th scope="col">Gênero</th>
-          <th scope="col">Duração</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% musicas.forEach(musica => { %>
-          <tr>
-            <th scope="row"><%= musica.titulo %></th>
-            <td><%= musica.artista %></td>
-            <td><%= musica.genero %></td>
-            <td><%= musica.duracao %></td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  </div>
-</body>
+  <script src="https://cdn.datatables.net/v/dt/dt-2.0.8/fh-4.0.1/r-3.0.2/sb-1.7.1/sp-2.3.1/datatables.min.js"></script>
+  <script>
+    new DataTable('#songs', {
+      fixedHeader: true,
+      language: {
+        search: 'Buscar:',
+        lengthMenu: '_MENU_ _ENTRIES_ por página',
+        entries: {
+          _: 'músicas',
+          1: 'música'
+        },
+        info: '_START_-_END_ de _TOTAL_ _ENTRIES-TOTAL_',
+        infoEmpty: '0 _ENTRIES_ encontradas ',
+        infoFiltered: 'de _MAX_ _ENTRIES_',
+        zeroRecords: 'Nenhuma música encontrada'
+      }
+    });
+  </script>
+
 </html>

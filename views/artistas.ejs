@@ -3,186 +3,232 @@
 
 <%- include('./header') %>
 
-<!-- Título -->
-<body>
-  <div class="container-fluid">
-    <h1 class="display-4">Artistas</h1>
-  </div>
+  <!-- Título -->
 
-  <!-- Tabela -->
-  <div class ="container-fluid">
-    <div class="table-responsive">
-      <table class="table text-center">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Gênero</th>
-            <th scope="col">
-              <button class="btn btn-outline-light" data-toggle="modal" data-target="#incluir"><i class="iconify" style="font-size: 100%;" data-icon="bi:plus-lg"></i></a>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% artistas.forEach(artista => { %>
-            <tr>
-              <th scope="row"><%= artista.id %></th>
-              <td><%= artista.nome %></td>
-              <td><%= artista.genero %></td>
-              <td>
-                <a href="#" role="button" class="text-success" data-toggle="modal" data-target="#editar"><i class="iconify" style="font-size: 125%;" data-icon="bi:pencil-square"></i></a>
-                &nbsp;
-                <a href="#" role="button" class="text-danger" data-toggle="modal" data-target="#excluir"><i class="iconify" style="font-size: 125%;" data-icon="bi:trash"></i></a>
-              </td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
+  <body>
+    <div class="container-fluid">
+
     </div>
-  </div>
 
-  <!-- Modal de Excluir-->
-  <div class="container-fluid">
-    <div class="modal fade" id="excluir" tabindex="-1" role="dialog" aria-labelledby="TituloModalExcluir" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="TituloModalExcluir">Excluir</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-              <span aria-hidden="true">&times;</span>
-            </button>
+    <!-- Tabela -->
+    <div class="container-fluid">
+      <h1 class="display-4">Artistas</h1>
+      <div class="table-responsive">
+        <table id="artistas" class="table">
+          <thead class="thead-dark" style="font-size: 125%">
+            <tr>
+              <th class="text-left" scope="col">ID</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Gênero</th>
+              <th scope="col">
+                <button class="btn btn-outline-light" data-toggle="modal" data-target="#incluir" title="Incluir"><i
+                    class="iconify" style="font-size: 150%;" data-icon="icon-park-outline:list-add"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% artistas.forEach(artista=> { %>
+              <tr>
+                <th class="text-left" scope="row">
+                  <%= artista.id %>
+                </th>
+                <td>
+                  <%= artista.nome %>
+                </td>
+                <td>
+                  <%= artista.genero %>
+                </td>
+                <td>
+                  <a href="#" role="button" class="text-success" data-toggle="modal" data-target="#editar"
+                    title="Editar"><i class="iconify" style="font-size: 125%;" data-icon="bi:pencil-square"></i></a>
+                  &nbsp;
+                  <a href="#" role="button" class="text-danger" data-toggle="modal" data-target="#excluir"
+                    title="Excluir"><i class="iconify" style="font-size: 125%;" data-icon="bi:trash"></i></a>
+                </td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Modal de Excluir-->
+    <div class="container-fluid">
+      <div class="modal fade" id="excluir" tabindex="-1" role="dialog" aria-labelledby="TituloModalExcluir"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="TituloModalExcluir">Excluir</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h4>Deseja excluir o/a artista <strong id="modal-text"></strong>?</h4>
+              <p><small>Todas suas músicas também serão excluídas.</small></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <form action="/artistas" method="GET">
+                <input type="hidden" name="id" id="excluir_id">
+                <input type="hidden" name="nome" id="excluir_nome">
+                <input type="hidden" name="genero" id="excluir_genero">
+                <input type="hidden" name="acao" id="acao" value="excluir">
+                <button type="submit" class="btn btn-danger">Excluir</button>
+              </form>
+            </div>
           </div>
-          <div class="modal-body">
-            <h4>Deseja excluir o/a artista <strong id="modal-text"></strong>?</h4>
-            <p><small>Todas suas músicas também serão excluídas.</small></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Editar -->
+    <div class="container-fluid">
+      <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="TituloModalEditar"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="TituloModalEditar">Editar</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
             <form action="/artistas" method="GET">
-              <input type="hidden" name="id" id="excluir_id">
-              <input type="hidden" name="nome" id="excluir_nome">
-              <input type="hidden" name="genero" id="excluir_genero">
-              <input type="hidden" name="acao" id="acao" value="excluir">
-              <button type="submit" class="btn btn-danger">Excluir</button>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="id" class="col-form-label">ID:</label>
+                  <input type="text" class="form-control" name="id" id="editar_id" readonly>
+                </div>
+                <div class="form-group">
+                  <label for="nome" class="col-form-label">Nome:</label>
+                  <input type="text" class="form-control" name="nome" id="editar_nome">
+                </div>
+                <div class="form-group">
+                  <label for="genero" class="col-form-label">Gênero:</label>
+                  <input type="text" class="form-control" name="genero" id="editar_genero"></input>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <input type="hidden" name="acao" id="acao" value="editar">
+                <button type="submit" class="btn btn-success">Editar</button>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Modal de Editar -->
-  <div class="container-fluid">
-    <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="TituloModalEditar" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="TituloModalEditar">Editar</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-              <span aria-hidden="true">&times;</span>
-            </button>
+    <!-- Modal de Incluir -->
+    <div class="container-fluid">
+      <div class="modal fade" id="incluir" tabindex="-1" role="dialog" aria-labelledby="TituloModalIncluir"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="TituloModalIncluir">Incluir</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="/artistas" method="GET">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="nome" class="col-form-label">Nome:</label>
+                  <input type="text" class="form-control" name="nome" id="incluir_nome" placeholder="Nome" required>
+                </div>
+                <div class="form-group">
+                  <label for="genero" class="col-form-label">Gênero:</label>
+                  <input type="text" class="form-control" name="genero" id="incluir_genero" placeholder="Gênero"
+                    required></input>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <input type="hidden" name="acao" id="acao" value="incluir">
+                <button type="submit" class="btn btn-primary">Incluir</button>
+              </div>
+            </form>
           </div>
-          <form action="/artistas" method="GET">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="id" class="col-form-label">ID:</label>
-                <input type="text" class="form-control" name="id" id="editar_id" readonly>
-              </div>
-              <div class="form-group">
-                <label for="nome" class="col-form-label">Nome:</label>
-                <input type="text" class="form-control" name="nome" id="editar_nome">
-              </div>
-              <div class="form-group">
-                <label for="genero" class="col-form-label">Gênero:</label>
-                <input type="text" class="form-control" name="genero" id="editar_genero"></input>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <input type="hidden" name="acao" id="acao" value="editar">
-              <button type="submit" class="btn btn-success">Editar</button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Modal de Incluir -->
-  <div class="container-fluid">
-    <div class="modal fade" id="incluir" tabindex="-1" role="dialog" aria-labelledby="TituloModalIncluir" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="TituloModalIncluir">Incluir</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form action="/artistas" method="GET">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="nome" class="col-form-label">Nome:</label>
-                <input type="text" class="form-control" name="nome" id="incluir_nome" placeholder="Nome" required>
-              </div>
-              <div class="form-group">
-                <label for="genero" class="col-form-label">Gênero:</label>
-                <input type="text" class="form-control" name="genero" id="incluir_genero" placeholder="Gênero" required></input>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <input type="hidden" name="acao" id="acao" value="incluir">
-              <button type="submit" class="btn btn-primary">Incluir</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- Script da Tabela -->
+    <script
+      src="https://cdn.datatables.net/v/dt/dt-2.0.8/fh-4.0.1/r-3.0.2/sb-1.7.1/sp-2.3.1/datatables.min.js"></script>
 
-  <!-- Script de Excluir-->
-  <script>
-    // Adiciona um listener a todos os botões com a classe
-    document.querySelectorAll('.text-danger').forEach(button => {
-      button.addEventListener('click', function() {
-        // Identifica a linha do botão clicado
-        const row = this.closest('tr');
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var table = new DataTable('#artistas', {
+          fixedHeader: true,
+          language: {
+            search: 'Buscar:',
+            lengthMenu: '_MENU_ _ENTRIES_ por página',
+            entries: {
+              _: 'artistas',
+              1: 'artista'
+            },
+            info: '_START_-_END_ de _TOTAL_ _ENTRIES-TOTAL_',
+            infoEmpty: '0 _ENTRIES_ encontrados ',
+            infoFiltered: 'de _MAX_ _ENTRIES_',
+            zeroRecords: 'Nenhum artista encontrado'
+          }
+        });
 
-        // Captura o valor do th e do td da linha
-        const id = row.querySelector('th').innerText;
-        const nome = row.querySelectorAll('td')[0].innerText;
-        const genero = row.querySelectorAll('td')[1].innerText;
-        
-        // Preenche o formulário oculto
-        document.getElementById('excluir_id').value = id;
-        document.getElementById('excluir_nome').value = nome;
-        document.getElementById('excluir_genero').value = genero;
-        
-        document.getElementById('modal-text').innerText = `${nome}`;
+        // Adiciona um listener a todos os botões com a classe .text-danger
+        function addListenerExcluir() {
+          document.querySelectorAll('.text-danger').forEach(button => {
+            button.addEventListener('click', function () {
+              // Identifica a linha do botão clicado
+              const row = this.closest('tr');
+
+              // Captura o valor do th e do td da linha
+              const id = row.querySelector('th').innerText;
+              const nome = row.querySelectorAll('td')[0].innerText;
+
+              // Atualiza texto do modal
+              document.getElementById('modal-text').innerText = `${nome}`;
+
+              // Preenche o formulário oculto
+              document.getElementById('excluir_id').value = id;
+            });
+          });
+        }
+
+        // Adiciona um listener a todos os botões com a classe .text-success
+        function addListenerEditar() {
+          document.querySelectorAll('.text-success').forEach(button => {
+            button.addEventListener('click', function () {
+              // Identifica a linha do botão clicado
+              const row = this.closest('tr');
+
+              // Captura o valor do th e do td da linha
+              const id = row.querySelector('th').innerText;
+              const nome = row.querySelectorAll('td')[0].innerText;
+              const genero = row.querySelectorAll('td')[1].innerText;
+
+              // Preenche o formulário
+              document.getElementById('editar_id').value = id;
+              document.getElementById('editar_nome').value = nome;
+              document.getElementById('editar_genero').value = genero;
+            });
+          });
+        }
+
+        // Adiciona os listeners para cada linha da primeira página da tabela
+        addListenerExcluir();
+        addListenerEditar();
+
+        // Adiciona os listeners para cada linha ao mudar a página da tabela
+        table.on('draw', function () {
+          addListenerExcluir();
+          addListenerEditar();
+        });
       });
-    });
-  </script>
+    </script>
+  </body>
 
-  <!-- Script de Editar -->
-  <script>
-    // Adiciona um listener a todos os botões com a classe
-    document.querySelectorAll('.text-success').forEach(button => {
-      button.addEventListener('click', function() {
-        // Identifica a linha do botão clicado
-        const row = this.closest('tr');
-
-        // Captura o valor do th e do td da linha
-        const id = row.querySelector('th').innerText;
-        const nome = row.querySelectorAll('td')[0].innerText;
-        const genero = row.querySelectorAll('td')[1].innerText;
-
-        // Preenche o formulário
-        document.getElementById('editar_id').value = id;
-        document.getElementById('editar_nome').value = nome;
-        document.getElementById('editar_genero').value = genero;
-      });
-    });
-  </script>
-
-</body>
+</html>

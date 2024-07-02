@@ -55,7 +55,7 @@ app.get('/musicas', (req, res) => {
             return;
         }
 
-        db.all(`SELECT id, nome FROM artistas`, [], (err, artistas) => {
+        db.all(`SELECT id, nome FROM artistas ORDER BY nome ASC`, [], (err, artistas) => {
             if (err) {
                 console.error(err.message);
                 res.status(500).send("Erro no servidor");
@@ -66,15 +66,15 @@ app.get('/musicas', (req, res) => {
                 let query = ``;
                 let variaveis = [];
                 
-                if(acao == 'incluir' && dados.titulo != '' && dados.duracao != '' && dados.artista_id != '') {
+                if(acao == 'incluir') {
                     query = `INSERT INTO musicas(titulo, duracao, artista_id) VALUES (?, ?, ?)`;
                     variaveis = [dados.titulo, dados.duracao, dados.artista_id];
 
-                } else if(acao == 'editar' && dados.id && dados.titulo && dados.duracao && dados.artista_id) {
+                } else if(acao == 'editar') {
                     query = `UPDATE musicas SET titulo=?, duracao=?, artista_id=? WHERE id=?`;
                     variaveis = [dados.titulo, dados.duracao, dados.artista_id, dados.id];
                 
-                } else if(acao == 'excluir' && dados.id) {
+                } else if(acao == 'excluir') {
                     query = `DELETE FROM musicas WHERE id=?`;
                     variaveis = [dados.id];
                 }
@@ -99,6 +99,7 @@ app.get('/musicas', (req, res) => {
 app.get('/artistas', (req, res) => {
     const acao = req.query.acao;
     const dados = { 'id': req.query.id, 'nome': req.query.nome, 'genero': req.query.genero};
+    console.log(req.query);
   
     db.all(`SELECT * FROM artistas`, [], (err, artistas) => {
         if (err) {
@@ -111,15 +112,15 @@ app.get('/artistas', (req, res) => {
             let query = ``;
             let variaveis = [];
 
-            if(acao == 'incluir' && dados.nome && dados.genero) {
+            if(acao == 'incluir') {
                 query = `INSERT INTO artistas(nome, genero) VALUES (?, ?)`;
                 variaveis = [dados.nome, dados.genero];
                 
-            } else if(acao == 'editar' && dados.id && dados.nome && dados.genero) {
+            } else if(acao == 'editar') {
                 query = `UPDATE artistas SET nome = ?, genero = ? WHERE id = ?`;
                 variaveis = [dados.nome, dados.genero, dados.id];
 
-            } else if(acao == 'excluir' && dados.id && dados.nome && dados.genero) {
+            } else if(acao == 'excluir') {
                 query = `DELETE FROM artistas WHERE id = ?`;
                 variaveis = [dados.id];
 
