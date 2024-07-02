@@ -43,12 +43,13 @@
     </div>
   </body>
 
-  <script src="https://cdn.datatables.net/v/dt/dt-2.0.8/fh-4.0.1/r-3.0.2/sb-1.7.1/sp-2.3.1/datatables.min.js"></script>
+  <script src="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.js"></script>
   <script>
     new DataTable('#songs', {
       fixedHeader: true,
+      searching: false,
+      ordering: false,
       language: {
-        search: 'Buscar:',
         lengthMenu: '_MENU_ _ENTRIES_ por página',
         entries: {
           _: 'músicas',

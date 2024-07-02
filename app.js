@@ -14,14 +14,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Rota principal
 app.get('/', (req, res) => {
-    const artistaSelecionado = req.query.artista;
     let query = `SELECT m.titulo, a.nome as artista, m.duracao, a.genero as genero
-                 FROM musicas m
-                 JOIN artistas a ON m.artista_id = a.id`;
-
-    if (artistaSelecionado) {
-        query += ` WHERE a.id = ${artistaSelecionado}`;
-    }
+                 FROM musicas m, artistas a
+                 WHERE m.artista_id = a.id`;
 
     db.all(query, [], (err, musicas) => {
         if (err) {
@@ -37,7 +32,7 @@ app.get('/', (req, res) => {
                 return;
             }
             
-            res.render('inicio', { page:'Início', musicas, artistas, artistaSelecionado });
+            res.render('inicio', { page:'Início', musicas, artistas });
         });
     });
 });
