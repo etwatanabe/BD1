@@ -16,10 +16,10 @@
         <table id="musicas" class="table">
           <thead class="thead-dark" style="font-size: 125%">
             <tr>
-              <th scope="col" class="text-left">ID</th>
+              <th scope="col">ID</th>
               <th scope="col">Título</th>
               <th scope="col">Duração</th>
-              <th scope="col" class="text-left">Artista (ID)</th>
+              <th scope="col">Artista (ID)</th>
               <th scope="col">
                 <button class="btn btn-outline-light" data-toggle="modal" data-target="#incluir" title="Incluir"><i
                     class="iconify" style="font-size: 150%;" data-icon="icon-park-outline:list-add"></i></a>
@@ -29,7 +29,7 @@
           <tbody>
             <% musicas.forEach(musica=> { %>
               <tr>
-                <th scope="row" class="text-left">
+                <th scope="row">
                   <%= musica.id %>
                 </th>
                 <td>
@@ -38,7 +38,7 @@
                 <td>
                   <%= musica.duracao %>
                 </td>
-                <td class="text-left">
+                <td>
                   <%= musica.artista_id %>
                 </td>
                 <td>
