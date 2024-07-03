@@ -3,15 +3,12 @@
 
 <%- include('./header') %>
 
-  <!-- Título -->
-
   <body>
     <div class="container-fluid">
+      <!-- Título -->
       <h1 class="display-4">Músicas</h1>
-    </div>
 
-    <!-- Tabela -->
-    <div class="container-fluid">
+      <!-- Tabela -->
       <div class="table-responsive">
         <table id="musicas" class="table">
           <thead class="thead-dark" style="font-size: 125%">
@@ -171,7 +168,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <input type="hidden" name="acao" id="acao" value="incluir">
-                <button type="submit" class="btn btn-success">Incluir</button>
+                <button type="submit" class="btn btn-primary">Incluir</button>
               </div>
             </form>
           </div>
@@ -180,9 +177,6 @@
     </div>
 
     <!-- Script da Tabela -->
-    <script
-      src="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.js"></script>
-
     <script>
       var table = new DataTable('#musicas', {
         fixedHeader: true,

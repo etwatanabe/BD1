@@ -3,16 +3,12 @@
 
 <%- include('./header') %>
 
-  <!-- Título -->
-
   <body>
     <div class="container-fluid">
-
-    </div>
-
-    <!-- Tabela -->
-    <div class="container-fluid">
+      <!-- Título -->
       <h1 class="display-4">Artistas</h1>
+      
+      <!-- Tabela -->
       <div class="table-responsive">
         <table id="artistas" class="table">
           <thead class="thead-dark" style="font-size: 125%">
@@ -72,8 +68,6 @@
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
               <form action="/artistas" method="GET">
                 <input type="hidden" name="id" id="excluir_id">
-                <input type="hidden" name="nome" id="excluir_nome">
-                <input type="hidden" name="genero" id="excluir_genero">
                 <input type="hidden" name="acao" id="acao" value="excluir">
                 <button type="submit" class="btn btn-danger">Excluir</button>
               </form>
@@ -157,9 +151,6 @@
     </div>
 
     <!-- Script da Tabela -->
-    <script
-      src="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.js"></script>
-
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         var table = new DataTable('#artistas', {
