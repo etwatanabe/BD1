@@ -1,6 +1,7 @@
-// init-db.js
+// Importar sqlite3
 const sqlite3 = require('sqlite3').verbose();
 
+// Inicializar database
 const db = new sqlite3.Database('./database/musicas.db');
 
 db.serialize(() => {
